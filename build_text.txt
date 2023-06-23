@@ -1,0 +1,29 @@
+
+> my-test-app@0.1.0 build
+> next build
+
+info  - Linting and checking validity of types...
+info  - Creating an optimized production build...
+info  - Compiled successfully
+info  - Collecting page data...
+info  - Generating static pages (0/3)
+undefined
+in chatbot
+info  - Generating static pages (3/3)
+info  - Finalizing page optimization...
+
+Route (pages)                              Size     First Load JS
+┌ ○ /                                      560 B            74 kB
+├   /_app                                  0 B            73.5 kB
+├ ○ /404                                   182 B          73.6 kB
+└ λ /api                                   0 B            73.5 kB
++ First Load JS shared by all              74.3 kB
+  ├ chunks/framework-cda2f1305c3d9424.js   45.2 kB
+  ├ chunks/main-4dcb7f9b52833aba.js        27.2 kB
+  ├ chunks/pages/_app-218e91a4be572ca4.js  316 B
+  ├ chunks/webpack-8fa1640cc84ba8fe.js     750 B
+  └ css/ae9f95146ec9b6d6.css               881 B
+
+λ  (Server)  server-side renders at runtime (uses getInitialProps or getServerSideProps)
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+
