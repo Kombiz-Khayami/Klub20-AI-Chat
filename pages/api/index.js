@@ -9,7 +9,7 @@ prompt uses too many tokens
 18-19s
 */
 
-const OPENAI_KEY = "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"
+const OPENAI_KEY = ""
 const chatRequestOpts = {
   "model": "gpt-3.5-turbo",
   "messages": []
