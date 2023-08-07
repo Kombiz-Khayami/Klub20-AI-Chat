@@ -1,3 +1,31 @@
+@media (max-width: 767px){
+    .chatbot {
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      height: 6in;
+      width: 80%;
+    }
+}
+
+@media (min-width: 768px) {
+  .chatbot {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    height: 30em;
+    width: 50%;
+  }
+}
+
+
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,21 +33,38 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #212122;
-  color: rgb(147, 149, 151);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("../public/assets/images/GymPicture.png");
+  color: rgb(147, 147, 151)
 }
 
 
 
 
-.chatbot-container {
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 10px;
+.header {
   display: flex;
   flex-direction: column;
-  height: 905px;
+  align-items: center;
+  color: rgba(15, 160, 242, 1);
+}
+
+.chatbot-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chatbot-description {
+  color: white;
+}
+
+.chatbot-name{
+  color: rgba(92, 179, 228, 1);
+}
+
+.chatbot-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .chat-messages {
@@ -31,6 +76,9 @@ body {
   padding: 5px;
   margin: 5px;
   border-radius: 4px;
+}
+.message > p {
+  white-space: pre-wrap;
 }
 
 .message.user {

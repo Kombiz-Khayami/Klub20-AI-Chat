@@ -33,26 +33,38 @@ export default function Chatbot() {
 
 
   return ( 
-    
-    <div className="chatbot-container">
-      <div className="chat-messages">
-        {chatMessages.map((message, index) => (
-          <div key={index} className={`message ${message.role}`}>
-            <p> {message.role == "user" ? 'User' : 'A.I'} </p>
-            <p>{message.content}</p>
-          </div>
-        ))}
-      </div>
-      <form className="chat-form" onSubmit={handleInputSubmit}>
-        <input
-          type="text"
-          placeholder="Type a message..."
-          value={inputValue}
-          onChange={handleInputChange}
-        />
-        <button type="submit">Send</button>
-      </form>
+    <>
+    <div className='header'>
+      <span><h2>Klub 20</h2></span>
+      <span><h4>Beaconsfield</h4></span> 
     </div>
+
+    <div className="chatbot-header">
+    <span className="chatbot-name" ><h5>Kub20 AI</h5></span>
+    <span className="chatbot-description"><em>Let me answer any questions you have about fitness and exercising</em></span>
+    </div>
+    <div className='chatbot-container'>
+      <div className="chatbot">
+        <div className="chat-messages">
+          {chatMessages.map((message, index) => (
+            <div key={index} className={`message ${message.role}`}>
+              <p> {message.role == "user" ? 'User' : 'A.I'} </p>
+              <p>{message.content}</p>
+            </div>
+          ))}
+        </div>
+        <form className="chat-form" onSubmit={handleInputSubmit}>
+          <input
+            type="text"
+            placeholder="Type a message..."
+            value={inputValue}
+            onChange={handleInputChange}
+          />
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+    </>
   );
 }
 
