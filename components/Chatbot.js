@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function Chatbot() {
   const [chatMessages, setChatMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
   let currentMessage = []
 
-
+  useEffect(() =>{
+    var chatBox = document.getElementById("chatMessages") 
+    chatBox.scrollTo(0,chatBox.scrollHeight)
+    return () =>{}
+  }, [chatMessages])
+  
+  
   function handleInputChange(event) {
     setInputValue(event.target.value);
   }
@@ -22,6 +28,7 @@ export default function Chatbot() {
 
    function handleInputSubmit(event) {
     event.preventDefault();
+
     if (inputValue.trim()) {
       currentMessage = [...chatMessages, { role: 'user', content: inputValue.trim() }];
       setChatMessages(currentMessage);
@@ -45,7 +52,7 @@ export default function Chatbot() {
     </div>
     <div className='chatbot-container'>
       <div className="chatbot">
-        <div className="chat-messages">
+        <div className="chat-messages" id="chatMessages">      
           {chatMessages.map((message, index) => (
             <div key={index} className={`message ${message.role}`}>
               <p> {message.role == "user" ? 'User' : 'A.I'} </p>
