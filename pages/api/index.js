@@ -9,12 +9,12 @@ prompt uses too many tokens
 18-19s
 */
 
-const OPENAI_KEY = ""
+
 const chatRequestOpts = {
   "model": "gpt-3.5-turbo",
   "messages": []
 };
-
+const assistant = "you are an assistant for a gym that answers questions ONLY about fitness and exercising. if anyone asks you questions not relating to fitness and/or exercising DO NOT answer them. Just say something like \"I'm sorry i'm unable to answer questions like that. But if you havr any fitness or exercising question i'd be happy to answer those.\" "
 
 export default async function handler(req, res) {
 
@@ -26,13 +26,13 @@ export default async function handler(req, res) {
    }
    
    chatRequestOpts.messages = [
-    {role: 'system', content: "You are a virtual assistant for a gym."},
+    {role: 'system', content: assistant},
     ...prompt.messages
    ];
 
   const chatResponse = await fetch('https://api.openai.com/v1/chat/completions', {
     headers: {
-      Authorization: `Bearer ${OPENAI_KEY}`,
+      Authorization: `Bearer ${$OPENAI_KEY}`,
       'Content-Type': 'application/json'
     },
     method: 'POST',
