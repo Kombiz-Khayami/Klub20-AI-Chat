@@ -1,43 +1,18 @@
 import React, { useState, useEffect } from 'react';
 
+import { useChat } from 'ai/react';
+
 export default function Chatbot() {
-  const [chatMessages, setChatMessages] = useState([]);
-  const [inputValue, setInputValue] = useState('');
-  let currentMessage = []
+
+  const { messages, input, handleInputChange, handleSubmit } = useChat({
+    api: "/api",
+  });
 
   useEffect(() =>{
     var chatBox = document.getElementById("chatMessages") 
     chatBox.scrollTo(0,chatBox.scrollHeight)
     return () =>{}
-  }, [chatMessages])
-  
-  
-  function handleInputChange(event) {
-    setInputValue(event.target.value);
-  }
-
-  async function sendMessageToAPI() {
-    
-    const stuff = await fetch("/api/", {
-      method: 'POST',
-      body: JSON.stringify({messages: currentMessage}),
-    }).then((res)=>res.json());
-    currentMessage = [...currentMessage, stuff]
-    setChatMessages(currentMessage)   
-  }  
-
-   function handleInputSubmit(event) {
-    event.preventDefault();
-
-    if (inputValue.trim()) {
-      currentMessage = [...chatMessages, { role: 'user', content: inputValue.trim() }];
-      setChatMessages(currentMessage);
-      setInputValue('');
-      sendMessageToAPI();
-    }
-    
-  }
-
+  })
 
   return ( 
     <>
@@ -48,23 +23,24 @@ export default function Chatbot() {
 
     <div className="chatbot-header">
     <span className="chatbot-name" ><h5>Kub20 AI</h5></span>
+
     <span className="chatbot-description"><em>Let me answer any questions you have about fitness and exercising</em></span>
     </div>
     <div className='chatbot-container'>
       <div className="chatbot">
         <div className="chat-messages" id="chatMessages">      
-          {chatMessages.map((message, index) => (
+          {messages.map((message, index) => (
             <div key={index} className={`message ${message.role}`}>
               <p> {message.role == "user" ? 'User' : 'A.I'} </p>
               <p>{message.content}</p>
             </div>
           ))}
         </div>
-        <form className="chat-form" onSubmit={handleInputSubmit}>
+        <form className="chat-form" onSubmit={handleSubmit}>
           <input
             type="text"
             placeholder="Type a message..."
-            value={inputValue}
+            value={input}
             onChange={handleInputChange}
           />
           <button type="submit">Send</button>
