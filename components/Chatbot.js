@@ -1,4 +1,168 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation'
+
+import { useChat } from 'ai/react';
+import Link from 'next/link';
+
+
+export default function Chatbot() {
+  const router = useRouter();
+  const [age, setAge] = useState('');
+  const [sex, setSex] = useState('');
+  const [bmi, setBMI] = useState('');
+  const [fitnessGoal, setFitnessGoal] = useState('');
+  const [mainFactors, setMainFactors] = useState(["","","",""])
+  const [input, setInput] = useState('')
+  let holder = ["","","",""];
+
+  const handleAgeChange = (event) => {
+    const inputAge = event.target.value;
+    if (!isNaN(inputAge) && inputAge >= 18 && inputAge <= 120) {
+      holder = mainFactors;
+      holder[2] = "["+inputAge+"]"
+      setMainFactors(holder)
+      setAge(inputAge);
+    } 
+    else{
+      setAge('');
+    }
+  };
+
+  const handleSexChange = (event) => {
+    holder = mainFactors;
+    holder[3] = "["+event.target.value+"]";
+    setMainFactors(holder);
+    setSex(event.target.value);
+    
+     
+    console.log(holder[3]);
+  }
+
+
+  const handleBMIChange = (event) => {
+    const bmiValue = event.target.value
+    if (!isNaN(bmiValue) && bmiValue > 0) {
+      holder = mainFactors;
+      holder[1] = "["+bmiValue+"]";
+      setMainFactors(holder);
+      setBMI(bmiValue);
+    }
+    else{  
+      setBMI('');
+    }
+  };
+
+  const handleFitnessGoalChange = (event) => {
+    holder = mainFactors;
+    holder[0] = "["+event.target.value+"]"
+    setMainFactors(holder);
+    setFitnessGoal(event.target.value);
+  };
+
+  async function handleSubmit(event) {
+    event.preventDefault()
+    holder = mainFactors[0]+","+mainFactors[1]+","+mainFactors[2]+","+mainFactors[3] 
+    setInput("Getting Plan...")
+   let fetchPlan = await fetch('api/getPlan', {
+      method: 'POST',
+      body: JSON.stringify({messages: holder})
+   }).then((res)=>res.json());
+   setInput(fetchPlan)
+  }
+
+  return (
+    <>
+    <form onSubmit={handleSubmit} hidden={input==='' ? false:true}>
+      <div>
+        <label>
+          Age:
+          <input
+            type="text"
+            onChange={handleAgeChange}
+            style={{ borderColor: age === '' ? 'red' : '' }}
+          />
+        </label>
+      </div>
+
+      <div>
+        <label>
+          Sex:
+          <input
+            type="radio"
+            name="Sex"
+            value="Male"            
+            onChange={handleSexChange}
+          />
+          Male
+          <input
+            type="radio"
+            name="Sex"
+            value="Female"            
+            onChange={handleSexChange}
+          />
+          Female
+        </label>
+      </div>
+
+      <div>
+      <label>
+          BMI:
+          <input
+            type="text"
+            onChange={handleBMIChange}
+            style={{ borderColor: bmi === '' ? 'red' : '' }}
+          />
+        </label>
+      </div>
+
+      <div>
+        <label>
+          Fitness Goal:
+          <input
+            type="radio"
+            name="fitnessGoal"
+            value="Weight loss"            
+            onChange={handleFitnessGoalChange}
+          />
+          Weight loss
+          <input
+            type="radio"
+            name="fitnessGoal"
+            value="Build muscle"
+            onChange={handleFitnessGoalChange}
+          />
+          Build muscle
+          <input
+            type="radio"
+            name="fitnessGoal"
+            value="Get toned"
+            onChange={handleFitnessGoalChange}
+          />
+          Get toned
+          <input
+            type="radio"
+            name="fitnessGoal"
+            value="Become stronger"            
+            onChange={handleFitnessGoalChange}
+          />
+          Become stronger
+        </label>
+      </div>
+
+        <button type='submit' disabled = {fitnessGoal === '' || sex === '' || bmi === '' || age === '' ? true : false}>Get Plan</button>
+    </form>
+    <div className="chat-messages" hidden={input != '' ? false:true}>
+      <div className='message assistant' >
+        <p>{input}</p>
+      </div>
+    </div>
+    </>
+  );
+}
+
+/*
+
+import React, { useState, useEffect } from 'react';
 
 import { useChat } from 'ai/react';
 
@@ -51,3 +215,4 @@ export default function Chatbot() {
   );
 }
 
+*/
