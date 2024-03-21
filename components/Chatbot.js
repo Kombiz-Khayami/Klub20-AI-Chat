@@ -14,49 +14,36 @@ export default function Chatbot() {
   const handleAgeChange = (event) => {
     const inputAge = event.target.value;
     if (!isNaN(inputAge) && inputAge >= 18 && inputAge <= 120) {
-      holder = mainFactors;
-      holder[2] = "["+inputAge+"]"
-      setMainFactors(holder)
       setAge(inputAge);
     } 
     else{
-      setAge('');
+      setAge(1);
     }
   };
 
   const handleSexChange = (event) => {
-    holder = mainFactors;
-    holder[3] = "["+event.target.value+"]";
-    setMainFactors(holder);
     setSex(event.target.value); 
-    console.log(event.target.value);
   }
 
 
   const handleBMIChange = (event) => {
     const bmiValue = event.target.value
     if (!isNaN(bmiValue) && bmiValue > 0) {
-      holder = mainFactors;
-      holder[1] = "["+bmiValue+"]";
-      setMainFactors(holder);
       setBMI(bmiValue);
     }
     else{  
-      setBMI('');
+      setBMI(0);
     }
   };
 
   const handleFitnessGoalChange = (event) => {
-    console.log(event.target.value)
-    holder = mainFactors;
-    holder[0] = "["+event.target.value+"]"
-    setMainFactors(holder);
     setFitnessGoal(event.target.value);
   };
 
   async function handleSubmit(event) {
     event.preventDefault()
-    holder = mainFactors[0]+","+mainFactors[1]+","+mainFactors[2]+","+mainFactors[3] 
+    holder = "["+fitnessGoal+"]"+","+"["+bmi+"]"+","+"["+age+"]"+","+"["+sex+"]"
+
     setInput("Getting Plan...")
     let fetchPlan = await fetch('api/getPlan', {
         method: 'POST',
@@ -84,9 +71,16 @@ export default function Chatbot() {
               <input
                 type="text"
                 onChange={handleAgeChange}
-                style={{ borderColor: age === '' ? 'red' : '' }}
+                style={{ borderColor: age < 18 ? 'red' : '' }}
               />
+              
             </label>
+            {age<18 ?   
+              <>
+                  <span class="validation">-Age is required</span><br />
+                  <span class="validation">-Can't be younger than 18</span>
+              </>:  
+            <></>}
           </div>
 
           <div>
@@ -105,9 +99,14 @@ export default function Chatbot() {
                 <input
                   type="text"
                   onChange={handleBMIChange}
-                  style={{ borderColor: bmi === '' ? 'red' : '' }}
+                  style={{ borderColor: bmi <= 0 ? 'red' : '' }}
                 />
             </label>
+            {bmi<= 0 ? 
+              <>
+                  <span class="validation">-BMI is required</span>
+              </>:
+            <></>}            
           </div>
 
           <div>
@@ -122,7 +121,7 @@ export default function Chatbot() {
             </label>
           </div>
 
-            <button type='submit' disabled = {fitnessGoal === '' || sex === '' || bmi === '' || age === '' ? true : false}><b>Get Plan</b></button>
+            <button type='submit' disabled = {fitnessGoal === '' || sex === '' || bmi <= 0  || age < 18 ? true : false}><b>Get Plan</b></button>
         </form>
         <div className="chat-messages" hidden={input != '' ? false:true}>
           <div className='message assistant' >
