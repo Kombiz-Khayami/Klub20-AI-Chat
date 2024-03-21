@@ -116,7 +116,7 @@ export default function Chatbot() {
               <select onChange={handleFitnessGoalChange}>
                 <option value="Weight loss">Weight loss</option>
                 <option value="Build muscle">Build muscle</option>
-                <option value="Get toned">Get toned</option>
+                <option value="Get Lean">Get Lean</option>
                 <option value="Become stronger">Become stronger</option>
               </select>
             </label>
