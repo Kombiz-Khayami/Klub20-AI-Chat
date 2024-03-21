@@ -7,11 +7,12 @@ export default function Chatbot() {
   const [sex, setSex] = useState('male');
   const [bmi, setBMI] = useState('');
   const [fitnessGoal, setFitnessGoal] = useState('Weight loss');
-  const [mainFactors, setMainFactors] = useState(["","","",""])
+  const [firstLoad, setFirstLoad] = useState(true)
   const [input, setInput] = useState('')
   let holder = ["","","",""];
 
   const handleAgeChange = (event) => {
+    setFirstLoad(false)
     const inputAge = event.target.value;
     if (!isNaN(inputAge) && inputAge >= 18 && inputAge <= 120) {
       setAge(inputAge);
@@ -27,6 +28,7 @@ export default function Chatbot() {
 
 
   const handleBMIChange = (event) => {
+    setFirstLoad(false)
     const bmiValue = event.target.value
     if (!isNaN(bmiValue) && bmiValue > 0) {
       setBMI(bmiValue);
@@ -71,11 +73,10 @@ export default function Chatbot() {
               <input
                 type="text"
                 onChange={handleAgeChange}
-                style={{ borderColor: age < 18 ? 'red' : '' }}
-              />
-              
+                style={{ borderColor: age < 18 && firstLoad===false ? 'red' : '' }}
+              />       
             </label>
-            {age<18 ?   
+            {age < 18  && firstLoad === false ?   
               <>
                   <span class="validation">-Age is required</span><br />
                   <span class="validation">-Can't be younger than 18</span>
@@ -99,10 +100,10 @@ export default function Chatbot() {
                 <input
                   type="text"
                   onChange={handleBMIChange}
-                  style={{ borderColor: bmi <= 0 ? 'red' : '' }}
+                  style={{ borderColor: bmi <= 0 && firstLoad === false ? 'red' : '' }}
                 />
             </label>
-            {bmi<= 0 ? 
+            {bmi <= 0 && firstLoad === false ? 
               <>
                   <span class="validation">-BMI is required</span>
               </>:
