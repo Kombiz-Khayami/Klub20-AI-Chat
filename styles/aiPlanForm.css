@@ -46,6 +46,11 @@ form > div {
     cursor: pointer;
   }
 
+  .ai-plan-form button:disabled{
+    background-color: rgb(68, 135, 183);
+    color: #bdbdbd;
+  }
+
   .header {
     display: flex;
     flex-direction: column;
@@ -97,5 +102,10 @@ form > div {
     text-align: center;
     font-size: 0.75em;
     width:50%;
+  }
+
+  span.validation{
+    font-size: 15px;
+    color:red;
   }
   
